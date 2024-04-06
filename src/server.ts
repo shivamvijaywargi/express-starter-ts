@@ -2,7 +2,7 @@ import app from "./app";
 import { CONFIG } from "./config";
 import { logger } from "./config/logger";
 
-const PORT = parseInt(CONFIG.PORT || "5000", 10);
+const PORT = parseInt(CONFIG.PORT || "5502", 10);
 
 const startServer = (PORT: number) => {
   try {
@@ -20,4 +20,4 @@ const startServer = (PORT: number) => {
   }
 };
 
-startServer(PORT);
+void startServer(PORT);

@@ -1,10 +1,9 @@
 import cors from "cors";
 import { config } from "dotenv";
-import express, { NextFunction, Request, Response } from "express";
-import { HttpError } from "http-errors";
+import express from "express";
 import morgan from "morgan";
 
-import { logger } from "./config/logger";
+import { errorHandler } from "./common/middlewares/errorHandler.middleware";
 
 config();
 
@@ -18,7 +17,7 @@ app.use(morgan("dev"));
 
 // Routes
 // Health Check Route
-app.get("/health-check", async (req, res) => {
+app.get("/health-check", (req, res) => {
   res.status(200).json({
     success: true,
     status: "OK",
@@ -35,24 +34,6 @@ app.all("*", (req, res) => {
 });
 
 // Gloabl error middleware
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
-  logger.error(err.message);
-
-  const statusCode = err.statusCode || 500;
-  const message = err.message || "Internal Server Error";
-
-  res.status(statusCode).json({
-    success: false,
-    errors: [
-      {
-        type: err.name,
-        message,
-        path: "",
-        location: "",
-      },
-    ],
-  });
-});
+app.use(errorHandler);
 
 export default app;
