@@ -33,7 +33,7 @@ app.all("*", (req, res) => {
   });
 });
 
-// Gloabl error middleware
+// Global error middleware
 app.use(errorHandler);
 
 export default app;
