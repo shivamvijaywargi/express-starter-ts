@@ -25,6 +25,8 @@ app.get("/health-check", (req, res) => {
   });
 });
 
+// Other routes
+
 // CatchAll - 404
 app.all("*", (req, res) => {
   res.status(404).json({
